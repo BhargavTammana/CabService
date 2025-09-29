@@ -50,7 +50,7 @@ public class TripBookingServiceImpl implements TripBookingService{
 	@Override
 	public List<Cab> searchByLocation(String pickUpLocation, String uuid)
 			throws TripBookingException, CurrentUserSessionException {
-				System.out.println("Searching for cabs at location: " + pickUpLocation);
+				
 		Optional<CurrentUserSession> validUser = currRepo.findByUuid(uuid);
 		if(validUser.isPresent()) {
 			List<Cab> allCab = cabRepo.findAll();
@@ -78,29 +78,28 @@ public class TripBookingServiceImpl implements TripBookingService{
 			throws TripBookingException ,CabException , CurrentUserSessionException{
 		
 		// Validate input parameters
-		System.out.println("Trip Booking Details: " + tripBooking);
-		if(tripBooking == null) {
-			throw new TripBookingException("Trip booking details cannot be null");
-		}
-		if(tripBooking.getPickupLocation() == null || tripBooking.getPickupLocation().trim().isEmpty()) {
-			throw new TripBookingException("Pickup location is required");
-		}
-		if(tripBooking.getDropLocation() == null || tripBooking.getDropLocation().trim().isEmpty()) {
-			throw new TripBookingException("Drop location is required");
-		}
-		if(tripBooking.getFromDateTime() == null || tripBooking.getFromDateTime().trim().isEmpty()) {
-			throw new TripBookingException("From date time is required");
-		}
-		if(tripBooking.getToDateTime() == null || tripBooking.getToDateTime().trim().isEmpty()) {
-			throw new TripBookingException("To date time is required");
-		}
-		if(tripBooking.getDistanceInKm() <= 0) {
-			throw new TripBookingException("Distance must be greater than 0");
-		}
+		
+		// if(tripBooking == null) {
+		// 	throw new TripBookingException("Trip booking details cannot be null");
+		// }
+		// if(tripBooking.getPickupLocation() == null || tripBooking.getPickupLocation().trim().isEmpty()) {
+		// 	throw new TripBookingException("Pickup location is required");
+		// }
+		// if(tripBooking.getDropLocation() == null || tripBooking.getDropLocation().trim().isEmpty()) {
+		// 	throw new TripBookingException("Drop location is required");
+		// }
+		// if(tripBooking.getFromDateTime() == null || tripBooking.getFromDateTime().trim().isEmpty()) {
+		// 	throw new TripBookingException("From date time is required");
+		// }
+		// if(tripBooking.getToDateTime() == null || tripBooking.getToDateTime().trim().isEmpty()) {
+		// 	throw new TripBookingException("To date time is required");
+		// }
+		// if(tripBooking.getDistanceInKm() <= 0) {
+		// 	throw new TripBookingException("Distance must be greater than 0");
+		// }
 		
 		Optional<CurrentUserSession> validUser = currRepo.findByUuid(uuid);
 		if(validUser.isPresent()) {
-			System.out.println("hello world");
 			CurrentUserSession currUser = validUser.get();
 			Optional<Customer> cust = customerRepo.findById(currUser.getCurrUserId());
 			Customer customer = cust.get();
@@ -110,30 +109,27 @@ public class TripBookingServiceImpl implements TripBookingService{
 				throw new TripBookingException("You have already booked an another Trip in the same Time");
 			}
 			else {
-				System.out.println("hello world biceps");
 				Optional<Cab> addCab = cabRepo.findById(cabId);
 				if(addCab.isPresent()) {
 					System.out.println("Cab found: " + addCab.get());
 					Cab newCab = addCab.get();
 					if(newCab.getCabCurrStatus().equalsIgnoreCase("Available") &&
 							newCab.getCurrLocation().equalsIgnoreCase(tripBooking.getPickupLocation())) {
-						System.out.println("Cab is available and matches pickup location");
+
 						newCab.setCabCurrStatus("Pending");
 						tripBooking.setCab(newCab);
-						System.out.println("TripBooking after setting cab: " + tripBooking);
 						tripBooking.setCustomer(customer);
-						System.out.println("TripBooking before adding to customer A: " + tripBooking);
+
 						tripBooking.setCurrStatus("Pending");
-						System.out.println("TripBooking before saving: " + tripBooking);
+
 						
 						// Save the trip booking first
 						TripBooking savedTrip = tripBookingRepo.save(tripBooking);
-						System.out.println("Trip saved successfully: " + savedTrip);
+
 						
 						// Now update the customer's trip list and save
 						allTripByCustomer.add(savedTrip);
 						customerRepo.save(customer);
-						System.out.println("Customer updated successfully");
 						
 						return savedTrip;
 						
@@ -193,22 +189,14 @@ public class TripBookingServiceImpl implements TripBookingService{
 				TripBooking trip = optionalTrip.get();
 			    Customer customer = trip.getCustomer();
 			    List<TripBooking> allTrips = customer.getTripBooking();
-			    System.out.println("Looking for drivers at location: " + trip.getPickupLocation());
-			    System.out.println("Looking for drivers with status: available");
+
 			    
-			    // First, let's see all drivers
-			    List<Driver> allDriversInSystem = driverRepo.findAll();
-			    System.out.println("Total drivers in system: " + allDriversInSystem.size());
-			    for(Driver d : allDriversInSystem) {
-			        System.out.println("Driver ID: " + d.getDriverId() + 
-			                         ", Location: '" + d.getCurrLocation() + 
-			                         "', Status: '" + d.getCurrDriverStatus() + "'");
-			    }
 			    
-			    // Try both case-insensitive search and exact search
+			    
+			    
 			    List<Driver> allDrivers = driverRepo.findByCurrLocationAndCurrDriverStatus(trip.getPickupLocation(), "available");
 			    
-			    // If no exact match found, try case-insensitive search
+			    
 			    if(allDrivers.isEmpty()) {
 			        System.out.println("No exact match found, trying case-insensitive search...");
 			        List<Driver> allAvailableDrivers = driverRepo.findAll();
@@ -221,9 +209,7 @@ public class TripBookingServiceImpl implements TripBookingService{
 			                String driverStatus = driver.getCurrDriverStatus().trim().toLowerCase();
 			                boolean statusMatch = driverStatus.equals("available") || driverStatus.equals("AVAILABLE");
 			                
-			                System.out.println("Checking driver: Location='" + driver.getCurrLocation() + 
-			                                 "' vs '" + trip.getPickupLocation() + "' (match: " + locationMatch + 
-			                                 "), Status='" + driver.getCurrDriverStatus() + "' -> '" + driverStatus + "' (match: " + statusMatch + ")");
+			               
 			                
 			                if(locationMatch && statusMatch) {
 			                    matchingDrivers.add(driver);
@@ -231,12 +217,12 @@ public class TripBookingServiceImpl implements TripBookingService{
 			            }
 			        }
 			        allDrivers = matchingDrivers;
-			        System.out.println("Case-insensitive search found: " + allDrivers.size() + " drivers");
+			      
 			    }
-			    System.out.println("Available drivers found: " + allDrivers.size());
+
 			    
 			    if(allDrivers.isEmpty()) {
-			    	System.out.println("No drivers found - cancelling trip");
+			    	
 			    	trip.setCurrStatus("cancelled");
 			    	for(TripBooking tb : allTrips) {
 			    		if(tb.getTripBookingId()==trip.getTripBookingId()) {
@@ -248,14 +234,13 @@ public class TripBookingServiceImpl implements TripBookingService{
 			    }
 			    else {
 			    	Driver assignDriver = allDrivers.get(0); 
-			    	System.out.println("Assigning driver: " + assignDriver.getDriverId() + " to trip: " + trip.getTripBookingId());
+			    	
 			    	
 				    // Update driver status
 				    assignDriver.setCurrDriverStatus("Booked");
 				    
 				    // Clear any existing cab relationship for this driver first
 				    if(assignDriver.getCab() != null) {
-				        System.out.println("Driver already has cab: " + assignDriver.getCab().getCabId() + ", clearing it");
 				        assignDriver.getCab().setDriver(null);
 				        cabRepo.save(assignDriver.getCab());
 				        assignDriver.setCab(null);
@@ -264,7 +249,6 @@ public class TripBookingServiceImpl implements TripBookingService{
 				    // Get the trip's cab and clear its current driver if any
 				    Cab tripCab = trip.getCab();
 				    if(tripCab.getDriver() != null && !tripCab.getDriver().equals(assignDriver)) {
-				        System.out.println("Cab already has driver: " + tripCab.getDriver().getDriverId() + ", clearing it");
 				        Driver oldDriver = tripCab.getDriver();
 				        oldDriver.setCab(null);
 				        oldDriver.setCurrDriverStatus("Available");
