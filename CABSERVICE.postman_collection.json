@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "9cf25147-25e8-46ca-b42f-0e68c9e46ed4",
+		"name": "CABSERVICE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39139006"
+	},
+	"item": [
+		{
+			"name": "CustomerRegister",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userName\": \"John\",\r\n  \"password\": \"securePassword123\",\r\n  \"address\": \"123 Main Street, City, State 12345\",\r\n  \"mobileNumber\": \"9876543210\",\r\n  \"email\": \"john.doe@email.com\",\r\n  \"userRole\": \"CUSTOMER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/customer/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserLogin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"john.doe@email.com\",\r\n  \"password\": \"securePassword123\",\r\n  \"role\": \"CUSTOMER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/Userlogin/Login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"Userlogin",
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CabRegister",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"carType\": \"GO\",\r\n  \"carName\": \"Swift Dzire\",\r\n  \"carNumber\": \"MH12GO1235\",\r\n  \"perKmRate\": 12.0,\r\n  \"currLocation\": \"Mumbai Central\",\r\n  \"cabCurrStatus\": \"AVAILABLE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cab/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cab",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DriverRegister",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userName\": \"Priya Sharma\",\r\n  \"password\": \"newdriver789\",\r\n  \"address\": \"78 Sector 15, Gurgaon, Haryana 122001\",\r\n  \"mobileNumber\": \"7654321098\",\r\n  \"email\": \"priya.sharma@email.com\",\r\n  \"userRole\": \"DRIVER\",\r\n  \"licenceNo\": \"HR2620230098765\",\r\n  \"rating\": 3.5,\r\n  \"currLocation\": \"Cyber City, Gurgaon\",\r\n  \"currDriverStatus\": \"AVAILABLE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/driver/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"driver",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AdminRegister",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userName\": \"System Administrator\",\r\n  \"password\": \"secureAdminPass123\",\r\n  \"address\": \"Head Office, Business District, Mumbai 400001\",\r\n  \"mobileNumber\": \"9123456789\",\r\n  \"email\": \"admin@cabservice.com\",\r\n  \"userRole\": \"ADMIN\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/admin/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchCab",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/tripBooking/searchCab?pickUpLocation={Mumbai Central}&uuid={0DkY6g}",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tripBooking",
+						"searchCab"
+					],
+					"query": [
+						{
+							"key": "pickUpLocation",
+							"value": "{Mumbai Central}",
+							"description": "Mumbai Central"
+						},
+						{
+							"key": "uuid",
+							"value": "{0DkY6g}",
+							"description": "0DkY6g"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bookrequest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pickupLocation\": \"Mumbai Central\",\r\n  \"fromDateTime\": \"2025-09-29 15:00:00\",\r\n  \"dropLocation\": \"Bandra West\", \r\n  \"toDateTime\": \"2025-09-29 16:00:00\",\r\n  \"distanceInKm\": 12.5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/tripBooking/BookRequest?cabId=1&uuid=ABCD123",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tripBooking",
+						"BookRequest"
+					],
+					"query": [
+						{
+							"key": "cabId",
+							"value": "1"
+						},
+						{
+							"key": "uuid",
+							"value": "ABCD123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AssignDriverByAdmin",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tripBooking/AssignDriverByAdmin?TripBookingId=852&uuid=ABCD123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tripBooking",
+						"AssignDriverByAdmin"
+					],
+					"query": [
+						{
+							"key": "TripBookingId",
+							"value": "852"
+						},
+						{
+							"key": "uuid",
+							"value": "ABCD123",
+							"description": "ABCD123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ViewBookingId",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "postmanrulz",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "api-key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://library-api.postmanlabs.com"
+		},
+		{
+			"key": "id",
+			"value": ""
+		},
+		{
+			"key": "skillcheckBaseUrl",
+			"value": "https://postman-echo.com",
+			"type": "string"
+		}
+	]
+}
