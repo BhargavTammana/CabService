@@ -77,27 +77,6 @@ public class TripBookingServiceImpl implements TripBookingService{
 	public TripBooking BookRequest(Integer cabId, TripBooking tripBooking, String uuid)
 			throws TripBookingException ,CabException , CurrentUserSessionException{
 		
-		// Validate input parameters
-		
-		// if(tripBooking == null) {
-		// 	throw new TripBookingException("Trip booking details cannot be null");
-		// }
-		// if(tripBooking.getPickupLocation() == null || tripBooking.getPickupLocation().trim().isEmpty()) {
-		// 	throw new TripBookingException("Pickup location is required");
-		// }
-		// if(tripBooking.getDropLocation() == null || tripBooking.getDropLocation().trim().isEmpty()) {
-		// 	throw new TripBookingException("Drop location is required");
-		// }
-		// if(tripBooking.getFromDateTime() == null || tripBooking.getFromDateTime().trim().isEmpty()) {
-		// 	throw new TripBookingException("From date time is required");
-		// }
-		// if(tripBooking.getToDateTime() == null || tripBooking.getToDateTime().trim().isEmpty()) {
-		// 	throw new TripBookingException("To date time is required");
-		// }
-		// if(tripBooking.getDistanceInKm() <= 0) {
-		// 	throw new TripBookingException("Distance must be greater than 0");
-		// }
-		
 		Optional<CurrentUserSession> validUser = currRepo.findByUuid(uuid);
 		if(validUser.isPresent()) {
 			CurrentUserSession currUser = validUser.get();
@@ -189,10 +168,6 @@ public class TripBookingServiceImpl implements TripBookingService{
 				TripBooking trip = optionalTrip.get();
 			    Customer customer = trip.getCustomer();
 			    List<TripBooking> allTrips = customer.getTripBooking();
-
-			    
-			    
-			    
 			    
 			    List<Driver> allDrivers = driverRepo.findByCurrLocationAndCurrDriverStatus(trip.getPickupLocation(), "available");
 			    
@@ -291,7 +266,6 @@ public class TripBookingServiceImpl implements TripBookingService{
 			throw new CurrentUserSessionException("User is not logged in or is not an admin.");
 		}
 	}
-
 
 	@Override
 	public TripBookingDTO viewBookingById(Integer TripBookingId, String uuid)
